@@ -2,6 +2,10 @@
 <div class="card mb-4">
   <div class="card-header">Create Products</div>
   <div class="card-body">
+    {{#if flashErrors}} {{#each flashErrors}}
+    <p class="alert alert-danger">{{this}}</p>
+    {{/each}} {{/if}}
+
     <form
       method="POST"
       action="/admin/products/store"
@@ -53,13 +57,6 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-  </div>
-</div>
-<div class="card">
-  <div class="card-header">Manage products</div>
-  <div class="card-body">
-    Welcome to the Admin Panel, use the sidebar to navigate between the
-    different options.
   </div>
 </div>
 {{/inline}} {{/admin}}

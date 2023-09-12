@@ -2,7 +2,9 @@
 <div class="card mb-4">
   <div class="card-header">Edit Product</div>
   <div class="card-body">
-    {{#with viewData.product}}
+    {{#if flashErrors}} {{#each flashErrors}}
+    <p class="alert alert-danger">{{this}}</p>
+    {{/each}} {{/if}} {{#with viewData.product}}
     <form
       method="POST"
       action="/admin/products/{{getId}}/update"

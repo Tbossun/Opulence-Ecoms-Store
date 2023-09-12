@@ -4,7 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as hbs from 'hbs';
 import * as hbsUtils from 'hbs-utils';
 import { resolve } from 'path';
-import * as session from 'express-session'
+import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -23,7 +23,19 @@ async function bootstrap() {
   );
   app.use(function (req, res, next) {
     res.locals.session = req.session;
+    const flashErrors: string[] = req.session.flashErrors;
+    if (flashErrors) {
+      res.locals.flashErrors = flashErrors;
+      req.session.flashErrors = null;
+    }
     next();
+  });
+  app.use('/admin*', function (req, res, next) {
+    if (req.session.user && req.session.user.role == 'admin') {
+      next();
+    } else {
+      res.redirect('/');
+    }
   });
 
   await app.listen(3000);
