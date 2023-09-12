@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Item } from './item.entity';
+
 @Entity()
 export class Order {
   @PrimaryGeneratedColumn()
@@ -32,8 +33,8 @@ export class Order {
   setTotal(total: number) {
     this.total = total;
   }
-  getDate(): Date {
-    return this.date;
+  getDate(): string {
+    return this.date.toISOString().split('T')[0];
   }
   setDate(date: Date) {
     this.date = date;
